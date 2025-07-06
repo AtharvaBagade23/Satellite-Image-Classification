@@ -6,10 +6,6 @@ A Django web application for processing satellite imagery to analyze vegetation 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🚀 Live Demo
-
-**Deployed on Render:** [https://satellite-classification.onrender.com](https://satellite-classification.onrender.com)
-
 ## 📋 Features
 
 - **🌱 Vegetation Analysis (NDVI)**: Calculate and visualize Normalized Difference Vegetation Index
@@ -116,34 +112,6 @@ A Django web application for processing satellite imagery to analyze vegetation 
 - `POST /` - File upload and processing
 - `GET /statistics/` - Processing statistics and charts
 - `GET /admin/` - Django admin interface
-
-## 🚀 Deployment
-
-### Quick Deploy to Render
-
-1. **Fork this repository**
-2. **Sign up at [render.com](https://render.com)**
-3. **Create new Web Service**
-4. **Connect your GitHub repository**
-5. **Configure environment variables**:
-   ```
-   SECRET_KEY=your-secret-key
-   DEBUG=False
-   ALLOWED_HOSTS=your-app-name.onrender.com
-   ```
-6. **Deploy!**
-
-### Environment Variables
-
-```bash
-# Required
-SECRET_KEY=your-secret-key-here
-DEBUG=False
-ALLOWED_HOSTS=your-domain.com
-
-# Optional (for database)
-DATABASE_URL=postgresql://user:password@host:port/database
-```
 
 ## 🔧 Configuration
 
