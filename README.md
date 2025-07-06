@@ -36,8 +36,8 @@ A Django web application for processing satellite imagery to analyze vegetation 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/satellite-image-classification.git
-   cd satellite-image-classification/Processor
+   git clone https://github.com/AtharvaBagade23/Satellite-Image-Classification.git
+   cd Satellite-Image-Classification/Processor
    ```
 
 2. **Create virtual environment**
