@@ -228,9 +228,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/your-username/satellite-image-classification/issues)
-- **Documentation**: [Wiki](https://github.com/your-username/satellite-image-classification/wiki)
-- **Email**: your-email@example.com
+- **Issues**: [GitHub Issues](https://github.com/AtharvaBagade23/Satellite-Image-Classification/issues)
+- **Documentation**: [Wiki](https://github.com/AtharvaBagade23/Satellite-Image-Classification/wiki)
+- **Email**: your-abagade26@gmail.com
 
 ## 🔮 Future Enhancements
 
@@ -243,6 +243,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [ ] Batch processing capabilities
 - [ ] Advanced visualization options
 
----
-
-**Made with ❤️ for Earth Observation and Environmental Analysis**
