@@ -1,0 +1,9 @@
+django
+earthengine-api
+numpy
+rasterio
+matplotlib
+requests
+scikit-learn
+pandas
+pillow

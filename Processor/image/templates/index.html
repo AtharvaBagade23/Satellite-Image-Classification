@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satellite Image Analyzer</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Satellite Image Analyzer</h1>
+            </div>
+            <div class="upload">
+                <h2>Upload Image here</h2>
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <h2>Select output Image:</h2>
+                    <select name="imagess" id="Images">
+                        <option value="Vegetation">Vegetation</option>
+                        <option value="water">Water Bodies</option>
+                    </select>
+                    <hr>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="{% url 'index' %}" class="active">Home</a></li>
+                    <li><a href="{% url 'statistics' %}">Statistics</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="output">
+            <h1>Output Analysis</h1>
+            <div class="image">
+                {% if plot or water %}
+                    <div class="veg" {% if selected_output != 'Vegetation' %}style="display:none"{% endif %}>
+                        <h2>Vegetation Analysis (NDVI)</h2>
+                        <img src="{{ plot.image.url }}" alt="Vegetation NDVI Plot" height="70%" width="70%">
+                        <div class="analysis-data">
+                            <p>Vegetation Area: <strong>{{ plot.area_km2|floatformat:2 }} km²</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div class="wat" {% if selected_output != 'water' %}style="display:none"{% endif %}>
+                        <h2>Water Bodies Analysis</h2>
+                        <img src="{{ water.image.url }}" alt="Water Bodies Plot" height="70%" width="70%">
+                        <div class="analysis-data">
+                            <p>Water Area: <strong>{{ water.area_km2|floatformat:2 }} km²</strong></p>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="placeholder">
+                        <p>Upload a satellite image to see the analysis results</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdown = document.getElementById('Images');
+            
+            dropdown.addEventListener('change', function() {
+                const value = this.value;
+                const vegDiv = document.querySelector('.veg');
+                const watDiv = document.querySelector('.wat');
+                
+                // Hide both images initially
+                vegDiv.style.display = 'none';
+                watDiv.style.display = 'none';
+                
+                // Show the relevant image based on the dropdown value
+                if (value === 'Vegetation') {
+                    vegDiv.style.display = 'block';
+                } else if (value === 'water') {
+                    watDiv.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

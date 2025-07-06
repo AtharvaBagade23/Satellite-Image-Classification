@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics - Satellite Image Analyzer</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Satellite Image Analyzer</h1>
+            </div>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'statistics' %}" class="active">Statistics</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="output statistics-page">
+            <h1>Analysis Statistics</h1>
+            
+            <div class="summary-boxes">
+                <div class="summary-box">
+                    <h3>Total Vegetation Area</h3>
+                    <p class="large-number">{{ total_veg_area|floatformat:2 }} km²</p>
+                </div>
+                <div class="summary-box">
+                    <h3>Total Water Bodies Area</h3>
+                    <p class="large-number">{{ total_water_area|floatformat:2 }} km²</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h2>Area Comparison</h2>
+                <canvas id="areaChart" 
+                    data-labels="{{ chart_data.labels|join:',' }}"
+                    data-veg="{{ chart_data.vegData|join:',' }}"
+                    data-water="{{ chart_data.waterData|join:',' }}">
+                </canvas>
+            </div>
+
+            <div class="data-tables">
+                <div class="table-section">
+                    <h2>Recent Vegetation Analysis</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Area (km²)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in ndvi_data %}
+                            <tr>
+                                <td>{{ item.title }}</td>
+                                <td>{{ item.created_at|date:"M d, Y" }}</td>
+                                <td>{{ item.area_km2|floatformat:2 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3">No vegetation data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-section">
+                    <h2>Recent Water Analysis</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Area (km²)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in water_data %}
+                            <tr>
+                                <td>{{ item.title }}</td>
+                                <td>{{ item.created_at|date:"M d, Y" }}</td>
+                                <td>{{ item.area_km2|floatformat:2 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3">No water data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('areaChart');
+            
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                
+                // Get data from data attributes
+                const labels = canvas.dataset.labels.split(',');
+                const vegData = canvas.dataset.veg.split(',').map(Number);
+                const waterData = canvas.dataset.water.split(',').map(Number);
+                
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Vegetation Area (km²)',
+                                data: vegData,
+                                backgroundColor: 'rgba(75, 192, 75, 0.7)'
+                            },
+                            {
+                                label: 'Water Area (km²)',
+                                data: waterData,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            }
+        });
+        </script>
+</body>
+</html>
