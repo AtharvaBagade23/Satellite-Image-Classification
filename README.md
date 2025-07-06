@@ -25,6 +25,9 @@ A Django web application for processing satellite imagery to analyze vegetation 
 - **Database**: SQLite (development) / PostgreSQL (production)
 - **Deployment**: Render, Railway, Heroku ready
 
+### 🚀 Live Demo  
+🔗 [Click here to view the live app](https://satellite-classification.onrender.com)
+
 ## 📦 Installation
 
 ### Prerequisites
